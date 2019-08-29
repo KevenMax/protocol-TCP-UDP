@@ -1,4 +1,5 @@
 #include "utils.h"
+#include "packets.h"
 #include <netdb.h>
 #include <string.h>
 #include <stdio.h>
@@ -27,6 +28,10 @@ int prepararSocketUDPClient(char *server, struct addrinfo **servAddrPtr)
   return sock;
 }
 
-void enviarHello(int UDP_SOCK, char *mat)
+void enviarHello(int UDP_SOCK, char *mat, struct addrinfo *servAddr)
 {
+  Pacote *pkt = constroiPacote(HELLO_SIZE, PSECRET, 1, *mat, constroiPayload1());
+  uint8_t outbuf[BUFSIZE];
+  size_t reqSize = Encode(pkt, outbuf, BUFSIZE, MSG_HELLO);
+  size_t numBytes = sendto(*sockPtr, outbuf, reqSize, 0, servAddr->ai_addr, servAddr->ai_addrlen);
 }

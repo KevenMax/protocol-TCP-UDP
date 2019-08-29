@@ -30,7 +30,7 @@ int main(int argc, char **argv)
       estadoAtual = MSG_HELLO;
       break;
     case MSG_HELLO:
-      enviarHello(UDP_SOCK, mat);
+      enviarHello(UDP_SOCK, mat, servAddrPtr);
       estadoAtual = FINAL;
       break;
     case FINAL:
